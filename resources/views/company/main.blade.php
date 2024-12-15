@@ -296,7 +296,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="js/job.js"></script>
+    <script src="{{ asset('js/job.js') }}"></script>
     @if (session('success'))
         <script>
             Swal.fire({
