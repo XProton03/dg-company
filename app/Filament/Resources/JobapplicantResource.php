@@ -155,6 +155,10 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                             ])
                             ->label('Status')
                             ->required(),
+                        Forms\Components\TextInput::make('ready_for_work')
+                            ->label('Siap Bekerja')
+                            ->required()
+                            ->disabled(),
                         Forms\Components\RichEditor::make('note')
                             ->maxLength(65535)
                             ->columnSpan(3),
