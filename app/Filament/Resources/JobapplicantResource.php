@@ -308,7 +308,7 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                     BulkAction::make('Interview')
                         ->label('Interview')
                         ->color('warning')
-                        ->icon('heroicon-o-check-circle')
+                        ->icon('heroicon-o-users')
                         ->requiresConfirmation()
                         ->action(fn($records) => $records->each(fn($record) => $record->update(['status' => 'Interview'])))
                         ->deselectRecordsAfterCompletion(),
@@ -317,7 +317,7 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                         ->color('success')
                         ->icon('heroicon-o-check-circle')
                         ->form([
-                            Forms\Components\Textarea::make('note')
+                            Forms\Components\RichEditor::make('note')
                                 ->label('Catatan')
                                 ->placeholder('Masukkan catatan untuk status Diterima...')
                                 ->required(),
@@ -335,8 +335,20 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                         ->label('Tidak Diterima')
                         ->color('danger')
                         ->icon('heroicon-o-x-circle')
-                        ->requiresConfirmation()
-                        ->action(fn($records) => $records->each(fn($record) => $record->update(['status' => 'Tidak Diterima'])))
+                        ->form([
+                            Forms\Components\RichEditor::make('note')
+                                ->label('Catatan')
+                                ->placeholder('Masukkan catatan untuk status tidak diterima...')
+                                ->required(),
+                        ])
+                        ->action(function ($records, array $data) {
+                            $records->each(function ($record) use ($data) {
+                                $record->update([
+                                    'status' => 'Tidak Diterima',
+                                    'note' => $data['note'], // Update kolom note dari form modal
+                                ]);
+                            });
+                        })
                         ->deselectRecordsAfterCompletion()
                 ]),
             ]);
