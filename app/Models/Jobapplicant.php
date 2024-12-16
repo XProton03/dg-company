@@ -35,16 +35,16 @@ class Jobapplicant extends Model
 
     public function jobapplications(): BelongsTo
     {
-        return $this->belongsTo(JobApplication::class, 'jobs_id');
+        return $this->belongsTo(JobApplication::class);
     }
 
-    public function setSkillsAttribute($value)
-    {
-        $this->attributes['skill'] = json_encode(array_map('trim', explode(',', $value)));
-    }
+    // public function setSkillsAttribute($value)
+    // {
+    //     $this->attributes['skill'] = json_encode(array_map('trim', explode(',', $value)));
+    // }
 
-    public function getSkillsAttribute($value)
-    {
-        return implode(', ', json_decode($value));
-    }
+    // public function getSkillsAttribute($value)
+    // {
+    //     return implode(', ', json_decode($value));
+    // }
 }
