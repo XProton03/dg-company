@@ -89,7 +89,7 @@ class JobController extends Controller
                 'ready_for_work'        => $validated['ready_for_work'],
                 'image'                 => $photoPath,
                 'cv'                    => $cvPath,
-                'status'                => 'New',
+                'status'                => 'Baru',
                 'note'                  => '-',
             ]);
 

@@ -316,8 +316,20 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                         ->label('Diterima')
                         ->color('success')
                         ->icon('heroicon-o-check-circle')
-                        ->requiresConfirmation()
-                        ->action(fn($records) => $records->each(fn($record) => $record->update(['status' => 'Diterima'])))
+                        ->form([
+                            Forms\Components\Textarea::make('note')
+                                ->label('Catatan')
+                                ->placeholder('Masukkan catatan untuk status Diterima...')
+                                ->required(),
+                        ])
+                        ->action(function ($records, array $data) {
+                            $records->each(function ($record) use ($data) {
+                                $record->update([
+                                    'status' => 'Diterima',
+                                    'note' => $data['note'], // Update kolom note dari form modal
+                                ]);
+                            });
+                        })
                         ->deselectRecordsAfterCompletion(),
                     BulkAction::make('Tidak Diterima')
                         ->label('Tidak Diterima')
