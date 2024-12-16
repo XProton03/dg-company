@@ -31,8 +31,8 @@ return new class extends Migration
             $table->text('experience')->nullable();
             $table->unsignedInteger('salary')->nullable();
             $table->enum('on_working', ['yes', 'no'])->nullable();
-            $table->string('cv')->nullable();
-            $table->string('status')->nullable();
+            $table->text('cv')->nullable();
+            $table->text('status')->nullable();
             $table->timestamps();
         });
     }
