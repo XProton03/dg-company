@@ -138,10 +138,11 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
                         Forms\Components\Select::make('status')
                             ->options([
                                 'Aktif' => 'Aktif',
+                                'Draft' => 'Draft',
                                 'Tidak Aktif' => 'Tidak Aktif',
                             ])
                             ->required()
-                            ->default('Aktif')
+                            ->default('Draft')
                             ->searchable()
                             ->preload(),
                         Forms\Components\FileUpload::make('image')
@@ -185,7 +186,11 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
                     ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.')),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->color(fn($state) => $state === 'Aktif' ? 'success' : ($state === 'Tidak Aktif' ? 'danger' : 'secondary')),
+                    ->color(fn($state) => [
+                        'Aktif'         => 'success',
+                        'Draft'         => 'warning',
+                        'Tidak Aktif'   => 'danger',
+                    ][$state] ?? 'secondary'),
                 Tables\Columns\TextColumn::make('description')
                     ->label('Description')
                     ->searchable()
@@ -228,6 +233,14 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
                         ->icon('heroicon-o-check-circle')
                         ->requiresConfirmation()
                         ->action(fn($records) => $records->each(fn($record) => $record->update(['status' => 'Aktif'])))
+                        ->deselectRecordsAfterCompletion(),
+
+                    BulkAction::make('draft')
+                        ->label('Draft')
+                        ->color('warning')
+                        ->icon('heroicon-o-archive-box')
+                        ->requiresConfirmation()
+                        ->action(fn($records) => $records->each(fn($record) => $record->update(['status' => 'Draft'])))
                         ->deselectRecordsAfterCompletion(),
 
                     BulkAction::make('deactivate')
