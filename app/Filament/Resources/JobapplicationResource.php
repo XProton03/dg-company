@@ -9,6 +9,8 @@ use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use App\Models\Jobapplication;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkAction;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -192,6 +194,20 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Action::make('activate')
+                    ->label('Aktifkan')
+                    ->visible(fn($record) => $record->status !== 'Aktif') // Tampilkan jika status bukan 'Aktif'
+                    ->color('success')
+                    ->action(fn($record) => $record->update(['status' => 'Aktif']))
+                    ->requiresConfirmation()
+                    ->icon('heroicon-o-check-circle'),
+                Action::make('deactivate')
+                    ->label('Nonaktifkan')
+                    ->visible(fn($record) => $record->status === 'Aktif') // Tampilkan jika status adalah 'Aktif'
+                    ->color('danger')
+                    ->action(fn($record) => $record->update(['status' => 'Tidak Aktif']))
+                    ->requiresConfirmation()
+                    ->icon('heroicon-o-x-circle'),
                 Tables\Actions\DeleteAction::make()->action(function ($record) {
                     // Hapus file dengan disk storage
                     if ($record->image && Storage::disk('public')->exists($record->image)) {
@@ -204,6 +220,21 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    BulkAction::make('activate')
+                        ->label('Aktifkan')
+                        ->color('success')
+                        ->icon('heroicon-o-check-circle')
+                        ->requiresConfirmation()
+                        ->action(fn($records) => $records->each(fn($record) => $record->update(['status' => 'Aktif'])))
+                        ->deselectRecordsAfterCompletion(),
+
+                    BulkAction::make('deactivate')
+                        ->label('Nonaktifkan')
+                        ->color('danger')
+                        ->icon('heroicon-o-x-circle')
+                        ->requiresConfirmation()
+                        ->action(fn($records) => $records->each(fn($record) => $record->update(['status' => 'Tidak Aktif'])))
+                        ->deselectRecordsAfterCompletion(),
                 ]),
             ]);
     }
