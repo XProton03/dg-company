@@ -10,6 +10,7 @@ use App\Models\Jobapplicant;
 use Illuminate\Support\Carbon;
 use Filament\Resources\Resource;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Actions\BulkAction;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
@@ -48,28 +49,34 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                         Forms\Components\TextInput::make('name')
                             ->unique(ignoreRecord: true)
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->disabled(),
                         Forms\Components\TextInput::make('age')
                             ->unique(ignoreRecord: true)
                             ->required()
                             ->numeric()
+                            ->disabled()
                             ->maxLength(3),
                         Forms\Components\TextInput::make('gender')
                             ->unique(ignoreRecord: true)
                             ->required()
+                            ->disabled()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('phone')
                             ->unique(ignoreRecord: true)
                             ->required()
+                            ->disabled()
                             ->numeric()
                             ->tel()
                             ->maxLength(15),
                         Forms\Components\TextInput::make('email')
                             ->unique(ignoreRecord: true)
                             ->email()
+                            ->disabled()
                             ->maxLength(255),
                         Forms\Components\RichEditor::make('address')
                             ->required()
+                            ->disabled()
                             ->maxLength(65535)
                             ->columnSpan(3),
                     ])
@@ -78,12 +85,15 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                     ->schema([
                         Forms\Components\TextInput::make('last_year_education')
                             ->label('Tahun')
+                            ->disabled()
                             ->required(),
                         Forms\Components\TextInput::make('last_level_education')
                             ->label('Level Pendidikan')
+                            ->disabled()
                             ->required(),
                         Forms\Components\TextInput::make('last_education')
                             ->label('Sekolah/Universitas')
+                            ->disabled()
                             ->required(),
                     ])
                     ->columns('3'),
@@ -91,17 +101,22 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                     ->schema([
                         Forms\Components\TextInput::make('last_year_position')
                             ->label('Tahun')
+                            ->disabled()
                             ->required(),
                         Forms\Components\TextInput::make('last_level_position')
                             ->label('Jabatan')
+                            ->disabled()
                             ->required(),
                         Forms\Components\TextInput::make('last_company')
                             ->label('Perusahaan')
+                            ->disabled()
                             ->required(),
                         Forms\Components\TextInput::make('experience')
-                            ->required(),
+                            ->required()
+                            ->disabled(),
                         Forms\Components\Select::make('on_working')
                             ->label('Masih Bekerja')
+                            ->disabled()
                             ->searchable()
                             ->preload()
                             ->live()
@@ -112,6 +127,7 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                             ->required(),
                         Forms\Components\TextInput::make('skill')
                             ->label('Keahlian')
+                            ->disabled()
                             ->required(),
                     ])
                     ->columns('3'),
@@ -125,18 +141,23 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                             ->disabled(),
                         Forms\Components\TextInput::make('salary')
                             ->label('Ekspektasi Gaji')
-                            ->required(),
+                            ->required()
+                            ->disabled(),
                         Forms\Components\Select::make('status')
                             ->searchable()
                             ->preload()
                             ->live()
                             ->options([
-                                'New' => 'New',
+                                'Beru' => 'Beru',
                                 'Interview' => 'Interview',
-                                'Rejected' => 'Rejected',
+                                'Diterima' => 'Diterima',
+                                'Tidak Diterima' => 'Tidak Diterima',
                             ])
                             ->label('Status')
                             ->required(),
+                        Forms\Components\RichEditor::make('note')
+                            ->maxLength(65535)
+                            ->columnSpan(3),
                     ])
                     ->columns('3'),
                 Forms\Components\Section::make('File Attachment')
@@ -204,6 +225,16 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                     ->label('Salary')
                     ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.'))
                     ->searchable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
+                    ->searchable()
+                    ->badge()
+                    ->color(fn($state) => [
+                        'Baru' => 'primary',
+                        'Interview' => 'warning',
+                        'Diterima' => 'success',
+                        'Tidak Diterima' => 'danger',
+                    ][$state] ?? 'secondary'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Tanggal Melamar')
                     ->searchable()
@@ -246,7 +277,7 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
             ->actions([
                 Tables\Actions\Action::make('phone')
                     ->label('WA')
-                    ->url(fn($record) => $record->phone ? 'https://wa.me/' . preg_replace('/\D/', '', $record->phone) : null) // Buat link WhatsApp
+                    ->url(fn($record) => $record->phone ? 'https://wa.me/62' . preg_replace('/\D/', '', $record->phone) : null) // Buat link WhatsApp
                     ->openUrlInNewTab()
                     ->icon('heroicon-o-chat-bubble-oval-left')
                     ->color('success'),
@@ -274,6 +305,27 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    BulkAction::make('Interview')
+                        ->label('Interview')
+                        ->color('warning')
+                        ->icon('heroicon-o-check-circle')
+                        ->requiresConfirmation()
+                        ->action(fn($records) => $records->each(fn($record) => $record->update(['status' => 'Interview'])))
+                        ->deselectRecordsAfterCompletion(),
+                    BulkAction::make('Diterima')
+                        ->label('Diterima')
+                        ->color('success')
+                        ->icon('heroicon-o-check-circle')
+                        ->requiresConfirmation()
+                        ->action(fn($records) => $records->each(fn($record) => $record->update(['status' => 'Diterima'])))
+                        ->deselectRecordsAfterCompletion(),
+                    BulkAction::make('Tidak Diterima')
+                        ->label('Tidak Diterima')
+                        ->color('danger')
+                        ->icon('heroicon-o-x-circle')
+                        ->requiresConfirmation()
+                        ->action(fn($records) => $records->each(fn($record) => $record->update(['status' => 'Tidak Diterima'])))
+                        ->deselectRecordsAfterCompletion()
                 ]),
             ]);
     }

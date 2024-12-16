@@ -145,7 +145,7 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
                             ->searchable()
                             ->preload(),
                         Forms\Components\FileUpload::make('image')
-                            ->preserveFilenames()
+                            ->label('Logo')
                             ->maxSize(1024)
                             ->openable()
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
@@ -171,7 +171,9 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
                     ->circular()
-                    ->url(fn($record) => asset('storage/' . $record->image)),
+                    ->url(fn($record) => $record->image
+                        ? asset('storage/' . $record->image)
+                        : asset('storage/default/logoDG1.png')),
                 Tables\Columns\TextColumn::make('title'),
                 Tables\Columns\TextColumn::make('location'),
                 Tables\Columns\TextColumn::make('hour_type'),

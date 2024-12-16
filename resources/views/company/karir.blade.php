@@ -264,10 +264,19 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="inputAddress"><span
+                                                                    class="text-danger">*</span>Siap Bekerja</label>
+                                                            <input type="text" class="form-control"
+                                                                id="ready_for_work" name="ready_for_work"
+                                                                placeholder="ex: Segera/ 1 month notice/ Siap tanggal xx-xx-xxxx"
+                                                                required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="inputAddress"><span
                                                                     class="text-danger">*</span>Pengalam
                                                                 Bekerja Dibidangnya</label>
                                                             <input type="text" class="form-control" id="experience"
-                                                                name="experience" placeholder="ex: 1 Tahun 3 Bulan">
+                                                                name="experience" placeholder="ex: 1 Tahun 3 Bulan"
+                                                                required>
                                                         </div>
                                                         <div class="row g-2 mb-3">
                                                             <div class="col-md-4">
@@ -278,7 +287,7 @@
                                                                     <span class="input-group-text"
                                                                         id="basic-addon1">Rp</span>
                                                                     <input type="number" class="form-control"
-                                                                        id="salary" name="salary">
+                                                                        id="salary" name="salary" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">

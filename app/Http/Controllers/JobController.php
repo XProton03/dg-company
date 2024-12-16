@@ -40,6 +40,7 @@ class JobController extends Controller
                 'experience'            => 'required|string',
                 'salary'                => 'required|numeric',
                 'on_working'            => 'required|string|in:yes,no',
+                'ready_for_work'        => 'required|string',
                 'cv'                    => 'required|mimes:pdf|max:2048',
             ]);
         } catch (ValidationException $e) {
@@ -85,9 +86,11 @@ class JobController extends Controller
                 'experience'            => $validated['experience'],
                 'salary'                => $validated['salary'],
                 'on_working'            => $validated['on_working'],
+                'ready_for_work'        => $validated['ready_for_work'],
                 'image'                 => $photoPath,
                 'cv'                    => $cvPath,
                 'status'                => 'New',
+                'note'                  => '-',
             ]);
 
             // Kirim email ke admin

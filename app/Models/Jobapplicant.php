@@ -29,9 +29,11 @@ class Jobapplicant extends Model
         'experience',
         'salary',
         'on_working',
+        'ready_for_work',
         'image',
         'cv',
         'status',
+        'note',
     ];
 
     public function jobapplications(): BelongsTo
