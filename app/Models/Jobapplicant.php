@@ -35,7 +35,7 @@ class Jobapplicant extends Model
 
     public function jobapplications(): BelongsTo
     {
-        return $this->belongsTo(JobApplication::class);
+        return $this->belongsTo(JobApplication::class, 'jobs_id');
     }
 
     // public function setSkillsAttribute($value)

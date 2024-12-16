@@ -15,6 +15,6 @@ class Jobapplication extends Model
 
     public function jobapplicants(): HasMany
     {
-        return $this->hasMany(Jobapplicant::class);
+        return $this->hasMany(Jobapplicant::class, 'jobs_id');
     }
 }
