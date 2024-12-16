@@ -13,7 +13,7 @@ class JobapplicationPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_role');
+        return $user->can('view_any_jobapplication');
     }
 
     /**
@@ -21,7 +21,7 @@ class JobapplicationPolicy
      */
     public function view(User $user, Jobapplication $jobapplication): bool
     {
-        return $user->can('view_role');
+        return $user->can('view_jobapplication');
     }
 
     /**
@@ -29,7 +29,7 @@ class JobapplicationPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_role');
+        return $user->can('create_jobapplication');
     }
 
     /**
@@ -37,7 +37,7 @@ class JobapplicationPolicy
      */
     public function update(User $user, Jobapplication $jobapplication): bool
     {
-        return $user->can('update_role');
+        return $user->can('update_jobapplication');
     }
 
     /**
@@ -45,12 +45,12 @@ class JobapplicationPolicy
      */
     public function delete(User $user, Jobapplication $jobapplication): bool
     {
-        return $user->can('delete_role');
+        return $user->can('delete_jobapplication');
     }
 
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_role');
+        return $user->can('delete_any_jobapplication');
     }
 
     /**

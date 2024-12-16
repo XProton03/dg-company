@@ -9,11 +9,12 @@ use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use App\Models\Jobapplication;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\JobapplicationResource\Pages;
-use App\Filament\Resources\JobapplicationResource\RelationManagers;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+use App\Filament\Resources\JobapplicationResource\RelationManagers;
 
 class JobapplicationResource extends Resource implements HasShieldPermissions
 {
@@ -192,6 +193,14 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()->action(function ($record) {
+                    // Hapus file dengan disk storage
+                    if ($record->image && Storage::disk('public')->exists($record->image)) {
+                        Storage::disk('public')->delete($record->image);
+                    }
+                    // Hapus data dari database
+                    $record->delete();
+                }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
