@@ -143,11 +143,10 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
                             ->searchable()
                             ->preload(),
                         Forms\Components\FileUpload::make('image')
-                            ->required()
                             ->preserveFilenames()
                             ->maxSize(1024)
                             ->openable()
-                            ->acceptedFileTypes(['image/jpeg', 'image/png'])
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
                             ->imageEditor()
                             ->imageEditorAspectRatios([
                                 null,
