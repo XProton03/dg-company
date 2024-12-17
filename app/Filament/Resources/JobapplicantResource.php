@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Actions\BulkAction;
 use Illuminate\Support\Facades\Storage;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -279,32 +280,34 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                     })
             ])
             ->actions([
-                Tables\Actions\Action::make('phone')
-                    ->label('WA')
-                    ->url(fn($record) => $record->phone ? 'https://wa.me/62' . preg_replace('/\D/', '', $record->phone) : null) // Buat link WhatsApp
-                    ->openUrlInNewTab()
-                    ->icon('heroicon-o-chat-bubble-oval-left')
-                    ->color('success'),
-                Tables\Actions\Action::make('cv')
-                    ->label('CV')
-                    ->url(fn($record) => $record->cv ? asset('storage/' . $record->cv) : null)
-                    ->openUrlInNewTab()
-                    ->icon('heroicon-o-document')
-                    ->color('primary'),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()->action(function ($record) {
-                    // Hapus file dengan disk storage
-                    if ($record->image && Storage::disk('public')->exists($record->image)) {
-                        Storage::disk('public')->delete($record->image);
-                    }
+                ActionGroup::make([
+                    Tables\Actions\Action::make('phone')
+                        ->label('WA')
+                        ->url(fn($record) => $record->phone ? 'https://wa.me/62' . preg_replace('/\D/', '', $record->phone) : null) // Buat link WhatsApp
+                        ->openUrlInNewTab()
+                        ->icon('heroicon-o-chat-bubble-oval-left')
+                        ->color('success'),
+                    Tables\Actions\Action::make('cv')
+                        ->label('CV')
+                        ->url(fn($record) => $record->cv ? asset('storage/' . $record->cv) : null)
+                        ->openUrlInNewTab()
+                        ->icon('heroicon-o-document')
+                        ->color('primary'),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make()->action(function ($record) {
+                        // Hapus file dengan disk storage
+                        if ($record->image && Storage::disk('public')->exists($record->image)) {
+                            Storage::disk('public')->delete($record->image);
+                        }
 
-                    if ($record->cv && Storage::disk('public')->exists($record->cv)) {
-                        Storage::disk('public')->delete($record->cv);
-                    }
+                        if ($record->cv && Storage::disk('public')->exists($record->cv)) {
+                            Storage::disk('public')->delete($record->cv);
+                        }
 
-                    // Hapus data dari database
-                    $record->delete();
-                }),
+                        // Hapus data dari database
+                        $record->delete();
+                    }),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

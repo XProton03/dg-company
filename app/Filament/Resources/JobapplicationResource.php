@@ -10,8 +10,10 @@ use Illuminate\Support\Str;
 use App\Models\Jobapplication;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
+use Filament\Support\Enums\ActionSize;
 use Filament\Tables\Actions\BulkAction;
 use Illuminate\Support\Facades\Storage;
+use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\JobapplicationResource\Pages;
@@ -200,29 +202,37 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Action::make('activate')
-                    ->label('Aktifkan')
-                    ->visible(fn($record) => $record->status !== 'Aktif') // Tampilkan jika status bukan 'Aktif'
-                    ->color('success')
-                    ->action(fn($record) => $record->update(['status' => 'Aktif']))
-                    ->requiresConfirmation()
-                    ->icon('heroicon-o-check-circle'),
-                Action::make('deactivate')
-                    ->label('Nonaktifkan')
-                    ->visible(fn($record) => $record->status === 'Aktif') // Tampilkan jika status adalah 'Aktif'
-                    ->color('danger')
-                    ->action(fn($record) => $record->update(['status' => 'Tidak Aktif']))
-                    ->requiresConfirmation()
-                    ->icon('heroicon-o-x-circle'),
-                Tables\Actions\DeleteAction::make()->action(function ($record) {
-                    // Hapus file dengan disk storage
-                    if ($record->image && Storage::disk('public')->exists($record->image)) {
-                        Storage::disk('public')->delete($record->image);
-                    }
-                    // Hapus data dari database
-                    $record->delete();
-                }),
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Action::make('activate')
+                        ->label('Aktifkan')
+                        ->visible(fn($record) => $record->status !== 'Aktif') // Tampilkan jika status bukan 'Aktif'
+                        ->color('success')
+                        ->action(fn($record) => $record->update(['status' => 'Aktif']))
+                        ->requiresConfirmation()
+                        ->icon('heroicon-o-check-circle'),
+                    Action::make('draft')
+                        ->label('Draft')
+                        ->color('warning')
+                        ->action(fn($record) => $record->update(['status' => 'Draft']))
+                        ->requiresConfirmation()
+                        ->icon('heroicon-o-archive-box'),
+                    Action::make('deactivate')
+                        ->label('Nonaktifkan')
+                        ->visible(fn($record) => $record->status === 'Aktif') // Tampilkan jika status adalah 'Aktif'
+                        ->color('danger')
+                        ->action(fn($record) => $record->update(['status' => 'Tidak Aktif']))
+                        ->requiresConfirmation()
+                        ->icon('heroicon-o-x-circle'),
+                    Tables\Actions\DeleteAction::make()->action(function ($record) {
+                        // Hapus file dengan disk storage
+                        if ($record->image && Storage::disk('public')->exists($record->image)) {
+                            Storage::disk('public')->delete($record->image);
+                        }
+                        // Hapus data dari database
+                        $record->delete();
+                    }),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

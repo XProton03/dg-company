@@ -91,14 +91,16 @@
                                         <div
                                             class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
                                             <div class="d-flex mb-3">
-                                                <a class="btn btn-secondary me-2" data-bs-toggle="collapse"
+                                                <button class="btn btn-secondary me-2" data-bs-toggle="collapse"
                                                     data-bs-target="#description-{{ $jobapplication->id }}"
                                                     aria-expanded="false"
-                                                    aria-controls="description-{{ $jobapplication->id }}"
-                                                    href="">Detail</a>
-                                                <a class="btn btn-primary" href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#applyModal-{{ $jobapplication->id }}">Apply
-                                                    Now</a>
+                                                    aria-controls="description-{{ $jobapplication->id }}">
+                                                    Detail
+                                                </button>
+                                                <button class="btn btn-primary" href="#" data-bs-toggle="modal"
+                                                    data-bs-target="#applyModal-{{ $jobapplication->id }}">
+                                                    Apply Now
+                                                </button>
                                             </div>
                                             <small class="text-truncate"><i
                                                     class="far fa-calendar-alt text-primary me-2"></i>Date Line:
