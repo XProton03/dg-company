@@ -237,60 +237,6 @@
                 </div>
             </div>
             <div class="row">
-                <!-- Single Testimonials Area -->
-                <!--<div class="col-12 col-md-6">
-                                    <div class="single-testimonial-area mb-100 d-flex wow fadeInUp" data-wow-delay="400ms">
-                                        <div class="testimonial-thumb">
-                                            <img src="img/bg-img/t1.jpg" alt="">
-                                        </div>
-                                        <div class="testimonial-content">
-                                            <h5>Great teachers</h5>
-                                            <p>Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit am et tellus blandit. Etiam nec odio vestibul. Etiam nec odio vestibulum est mat tis effic iturut magna.</p>
-                                            <h6><span>Maria Smith,</span> Student</h6>
-                                        </div>
-                                    </div>
-                                </div>-->
-                <!-- Single Testimonials Area -->
-                <!--<div class="col-12 col-md-6">
-                                    <div class="single-testimonial-area mb-100 d-flex wow fadeInUp" data-wow-delay="500ms">
-                                        <div class="testimonial-thumb">
-                                            <img src="img/bg-img/t2.jpg" alt="">
-                                        </div>
-                                        <div class="testimonial-content">
-                                            <h5>Easy and user friendly courses</h5>
-                                            <p>Retiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit am et tellus blandit. Etiam nec odio vestibul.</p>
-                                            <h6><span>Shawn Gaines,</span> Student</h6>
-                                        </div>
-                                    </div>
-                                </div>-->
-                <!-- Single Testimonials Area -->
-                <!--<div class="col-12 col-md-6">
-                                    <div class="single-testimonial-area mb-100 d-flex wow fadeInUp" data-wow-delay="600ms">
-                                        <div class="testimonial-thumb">
-                                            <img src="img/bg-img/t3.jpg" alt="">
-                                        </div>
-                                        <div class="testimonial-content">
-                                            <h5>I just love the courses here</h5>
-                                            <p>Nec odio vestibulum est mattis effic iturut magna. Pellentesque sit am et tellus blandit. Etiam nec odio vestibul. Etiam nec odio vestibulum est mat tis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odio ves tibul.</p>
-                                            <h6><span>Ross Cooper,</span> Student</h6>
-                                        </div>
-                                    </div>
-                                </div>-->
-                <!-- Single Testimonials Area -->
-                <!--<div class="col-12 col-md-6">
-                                    <div class="single-testimonial-area mb-100 d-flex wow fadeInUp" data-wow-delay="700ms">
-                                        <div class="testimonial-thumb">
-                                            <img src="img/bg-img/t4.jpg" alt="">
-                                        </div>
-                                        <div class="testimonial-content">
-                                            <h5>One good academy</h5>
-                                            <p>Vestibulum est mattis effic iturut magna. Pellentesque sit am et tellus blandit. Etiam nec odio vestibul. Etiam nec odio vestibu lum est mat tis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odio ves tibul. Etiam nec odio vestibulum est mat tis effic iturut magnaNec odio vestibulum est mattis effic iturut magna.</p>
-                                            <h6><span>James Williams,</span> Student</h6>
-                                        </div>
-                                    </div>
-                                </div>-->
-            </div>
-            <div class="row">
                 <div class="col-12">
                     <div class="load-more-btn text-center wow fadeInUp" data-wow-delay="800ms">
                         <a href="?p=portofolio" class="btn academy-btn">Selengkapnya</a>
@@ -411,19 +357,4 @@
         </div>
     </div>
     <!-- ##### Partner Area End ##### -->
-
-    <!-- ##### CTA Area Start ##### -->
-    <!--<div class="call-to-action-area">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="cta-content d-flex align-items-center justify-content-between flex-wrap">
-                                        <h3>Apa Manfaat dan Keuntungan Maintenance Contract ?</h3>
-                                        <a href="#" class="btn academy-btn">Selengkapnya</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
-    <!-- ##### CTA Area End ##### -->
 @endsection

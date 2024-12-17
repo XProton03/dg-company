@@ -13,15 +13,65 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-12 wow fadeInUp" data-wow-delay="400ms">
-                    <p align="justify">
-                        CV. DEA GROUP adalah Perusahaan yang bergerak di Bidang Information Teknologi dengan jaringan IT
-                        seluruh indonesia, Dibeberapa kesempatan terkadang kami membutuhkan SDM <b>Infomation Technology
-                            OnDesk</b> untuk proyek kami yang akan ditempatkan di beberapa Kota dan Propinsi, kami
-                        menawarkan lebih dari sekadar pekerjaan—kami memberikan kesempatan untuk berkarir, berkembang,
-                        dan berinovasi. Jadilah bagian dari tim yang dinamis dan buatlah dampak nyata bersama kami. Mari
-                        wujudkan masa depan yang lebih cerah bersama!
+                    <p class="text-center">
+                        Di CV. DEA GROUP, kami percaya bahwa karyawan adalah aset terbesar dalam mencapai kesuksesan
+                        bersama. Kami berkomitmen untuk menciptakan lingkungan kerja yang inovatif, kolaboratif, dan
+                        inspiratif, di mana setiap individu dapat berkembang dan memberikan kontribusi terbaik mereka.
                     </p>
-                    <h3 class="text-center mt-5 mb-5">Rekrutmen Terbuka</h3>
+                    <div class="section-heading text-center mt-50 mx-auto wow fadeInUp" data-wow-delay="300ms">
+                        <span></span>
+                        <h3>Mengapa Bergabung dengan Kami?</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Budaya Kerja Positif</h6>
+                                    <p class="card-text">
+                                        Kami menjunjung tinggi nilai kejujuran, kolaborasi, dan inovasi di tempat kerja.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Peluang Pengembangan Karir</h6>
+                                    <p class="card-text">
+                                        Kami menyediakan pelatihan, mentoring, dan kesempatan promosi untuk mendorong
+                                        pertumbuhan profesional Anda.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Lingkungan Kerja Dinamis</h6>
+                                    <p class="card-text">
+                                        Bekerja bersama tim yang berdedikasi dan kreatif dalam suasana kerja yang mendukung
+                                        dan fleksibel..</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Kompensasi dan Benefit Kompetitif</h6>
+                                    <p class="card-text">
+                                        Kami menawarkan gaji yang adil, tunjangan kesehatan, cuti tahunan, dan benefit
+                                        lainnya yang menarik.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-heading text-center mt-50 mx-auto wow fadeInUp" data-wow-delay="300ms">
+                        <span>We Are Hiring !!!</span>
+                        <h3>Rekrutmen Terbuka</h3>
+                    </div>
+                    {{-- <h3 class="text-center mt-5 mb-5">Rekrutmen Terbuka</h3> --}}
                     @foreach ($jobapplications as $jobapplication)
                         <div class="card mb-3">
                             <div class="card-body">
@@ -112,7 +162,8 @@
                                                 <div class="col-md-12">
                                                     <div class="card-body">
                                                         <div class="mb-3">
-                                                            <label for="inputAddress"><span class="text-danger">*</span>Nama
+                                                            <label for="inputAddress"><span
+                                                                    class="text-danger">*</span>Nama
                                                                 lengkap</label>
                                                             <input type="text" class="form-control" id="name"
                                                                 name="name" placeholder="Masukan nama lengkap">
