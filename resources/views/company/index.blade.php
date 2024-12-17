@@ -239,7 +239,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="load-more-btn text-center wow fadeInUp" data-wow-delay="800ms">
-                        <a href="?p=portofolio" class="btn academy-btn">Selengkapnya</a>
+                        <a href="/portofolio" class="btn academy-btn">Selengkapnya</a>
                     </div>
                 </div>
             </div>
