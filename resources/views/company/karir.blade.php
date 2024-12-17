@@ -22,46 +22,33 @@
                         <span></span>
                         <h3>Mengapa Bergabung dengan Kami?</h3>
                     </div>
-                    <div class="row">
-                        <div class="col-12 col-md-3">
+                    <div class="row text-center">
+                        <div class="col-12 col-md-4">
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title">Budaya Kerja Positif</h6>
                                     <p class="card-text">
-                                        Kami menjunjung tinggi nilai kejujuran, kolaborasi, dan inovasi di tempat kerja.
+                                        Lingkungan kerja yang menghargai inovasi, kerja sama, dan keberagaman.
                                     </p>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-md-4">
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title">Peluang Pengembangan Karir</h6>
                                     <p class="card-text">
-                                        Kami menyediakan pelatihan, mentoring, dan kesempatan promosi untuk mendorong
-                                        pertumbuhan profesional Anda.
+                                        Peluang berkembang melalui pelatihan dan mentoring untuk kesuksesan Anda.
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h6 class="card-title">Lingkungan Kerja Dinamis</h6>
-                                    <p class="card-text">
-                                        Bekerja bersama tim yang berdedikasi dan kreatif dalam suasana kerja yang mendukung
-                                        dan fleksibel..</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-md-4">
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title">Kompensasi dan Benefit Kompetitif</h6>
                                     <p class="card-text">
-                                        Kami menawarkan gaji yang adil, tunjangan kesehatan, cuti tahunan, dan benefit
-                                        lainnya yang menarik.
+                                        Gaji, benefit, dan penghargaan terbaik untuk kontribusi Anda.
                                     </p>
                                 </div>
                             </div>
