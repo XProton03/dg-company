@@ -8,13 +8,22 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use App\Models\Jobapplication;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Illuminate\Support\HtmlString;
 use Filament\Tables\Actions\Action;
 use Filament\Support\Enums\ActionSize;
+use Filament\Support\Enums\FontWeight;
+use Filament\Infolists\Components\Grid;
 use Filament\Tables\Actions\BulkAction;
 use Illuminate\Support\Facades\Storage;
+use Filament\Infolists\Components\Split;
 use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Fieldset;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ImageEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\JobapplicationResource\Pages;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
@@ -183,9 +192,10 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
                 Tables\Columns\TextColumn::make('employment_type')
                     ->formatStateUsing(fn($state): string => Str::headline($state)),
                 Tables\Columns\TextColumn::make('salary_min')
-                    ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.')),
+                    ->money('IDR'),
                 Tables\Columns\TextColumn::make('salary_max')
-                    ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.')),
+                    ->money('IDR'),
+                //->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.')),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->color(fn($state) => [
@@ -203,6 +213,7 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
             ])
             ->actions([
                 ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Action::make('activate')
                         ->label('Aktifkan')
@@ -264,6 +275,78 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Detail Lowongan Kerja')
+                    ->description()
+                    ->schema([
+                        Split::make([
+                            Section::make([
+                                ImageEntry::make('image')
+                                    ->hiddenLabel()
+                                    ->url(fn($record) => $record->image
+                                        ? asset('storage/' . $record->image)
+                                        : asset('storage/default/logoDG1.png'))
+                                    ->circular(),
+                                TextEntry::make('created_at')
+                                    ->badge()
+                                    ->dateTime(),
+                                TextEntry::make('status')
+                                    ->badge()
+                                    ->color(fn(string $state): string => match ($state) {
+                                        'Draft' => 'gray',
+                                        'Aktif' => 'success',
+                                        'Tidak Aktif' => 'danger',
+                                    }),
+                            ])->grow(false),
+                            Section::make([
+                                Fieldset::make('Informasi Lowongan Kerja')
+                                    ->schema([
+                                        TextEntry::make('title')
+                                            ->label('Judul'),
+                                        TextEntry::make('location')
+                                            ->label('Lokasi'),
+                                        TextEntry::make('hour_type')
+                                            ->badge()
+                                            ->label('Jenis Pekerjaan'),
+                                        TextEntry::make('employment_type')
+                                            ->badge()
+                                            ->label('Tipe Pekerjaan'),
+                                        TextEntry::make('salary_min')
+                                            ->label('Gaji Minimum')
+                                            ->money('IDR', 0),
+                                        TextEntry::make('salary_max')
+                                            ->label('Gaji Maksimum')
+                                            ->money('IDR', 0),
+
+                                    ])->columns(3),
+                                Fieldset::make('Persyaratan Pekerjaan')
+                                    ->schema([
+                                        TextEntry::make('gender')
+                                            ->label('Jenis Kelamin'),
+                                        TextEntry::make('age_level')
+                                            ->label('Usia'),
+                                        TextEntry::make('education_level')
+                                            ->label('Pendidikan Terakhir'),
+                                        TextEntry::make('experience_year')
+                                            ->label('Pengalaman Kerja'),
+                                    ]),
+                                Fieldset::make('Deskripsi Pekerjaan')
+                                    ->schema([
+                                        TextEntry::make('description')
+                                            ->hiddenLabel()
+                                            ->columnSpan(3)
+                                            ->markdown(),
+                                    ])->columns(3),
+                            ]),
+                        ])->from('md'),
+                    ]),
+
+            ]);
+    }
+
     public static function getRelations(): array
     {
         return [
@@ -277,6 +360,7 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
             'index' => Pages\ListJobapplications::route('/'),
             'create' => Pages\CreateJobapplication::route('/create'),
             'edit' => Pages\EditJobapplication::route('/{record}/edit'),
+            'view' => Pages\ViewJobapplication::route('/{record}'),
         ];
     }
 }

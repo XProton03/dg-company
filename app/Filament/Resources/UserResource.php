@@ -9,15 +9,19 @@ use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Illuminate\Support\Facades\Hash;
 use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Infolists\Components\Section;
 use Filament\Resources\Pages\CreateRecord;
+use Filament\Infolists\Components\TextEntry;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+use Filament\Infolists\Components\Grid;
 
 class UserResource extends Resource implements HasShieldPermissions
 {
@@ -96,6 +100,22 @@ class UserResource extends Resource implements HasShieldPermissions
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Informasi Akun')
+                    ->schema([
+                        TextEntry::make('name')
+                            ->label('Nama User'),
+                        TextEntry::make('email')
+                            ->label('Email'),
+                        TextEntry::make('roles.name')
+                            ->label('Role'),
+                    ])->columns(3)
+            ]);
+    }
+
     public static function getRelations(): array
     {
         return [
@@ -109,6 +129,7 @@ class UserResource extends Resource implements HasShieldPermissions
             'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
+            'view' => Pages\ViewUser::route('/{record}'),
         ];
     }
 }

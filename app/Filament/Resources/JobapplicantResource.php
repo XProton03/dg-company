@@ -8,14 +8,21 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\Jobapplicant;
 use Illuminate\Support\Carbon;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Actions\BulkAction;
 use Illuminate\Support\Facades\Storage;
+use Filament\Infolists\Components\Split;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Fieldset;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ImageEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\JobapplicantResource\Pages;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
@@ -293,6 +300,7 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                         ->openUrlInNewTab()
                         ->icon('heroicon-o-document')
                         ->color('primary'),
+                    Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make()->action(function ($record) {
                         // Hapus file dengan disk storage
@@ -360,6 +368,108 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                 ]),
             ]);
     }
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Detail Pelamar')
+                    ->description()
+                    ->schema([
+                        Split::make([
+                            Section::make([
+                                ImageEntry::make('image')
+                                    ->hiddenLabel()
+                                    ->url(fn($record) => $record->image
+                                        ? asset('storage/' . $record->image)
+                                        : asset('storage/default/logoDG1.png'))
+                                    ->circular(),
+                            ])->grow(false),
+                            Section::make([
+                                Fieldset::make('Data diri')
+                                    ->schema([
+                                        TextEntry::make('name')
+                                            ->label('Nama'),
+                                        TextEntry::make('age')
+                                            ->label('Umur'),
+                                        TextEntry::make('gender')
+                                            ->label('Jenis Kelamin'),
+                                        TextEntry::make('phone')
+                                            ->label('Phone'),
+                                        TextEntry::make('email')
+                                            ->icon('heroicon-m-envelope')
+                                            ->label('Email')
+                                            ->columnSpan(2),
+                                        TextEntry::make('address')
+                                            ->label('Alamat')
+                                            ->html(fn($record) => $record->address),
+
+                                    ])->columns(3),
+                                Fieldset::make('Pendidikan')
+                                    ->schema([
+                                        TextEntry::make('last_year_education')
+                                            ->label('Tahun Terakhir Pendidikan'),
+                                        TextEntry::make('last_level_education')
+                                            ->label('Bidang Pendidikan'),
+                                        TextEntry::make('last_education')
+                                            ->label('Sekolah/Universitas'),
+                                    ])->columns(3),
+                                Fieldset::make('Riwayat pekerjaan dan keahlian')
+                                    ->schema([
+                                        TextEntry::make('last_year_position')
+                                            ->label('Tahun'),
+                                        TextEntry::make('last_level_position')
+                                            ->label('Jabatan'),
+                                        TextEntry::make('last_company')
+                                            ->label('Perusahaan'),
+                                        TextEntry::make('experience')
+                                            ->label('Pengalaman'),
+                                        TextEntry::make('on_working')
+                                            ->badge()
+                                            ->label('Masih Bekerja'),
+                                        TextEntry::make('skill')
+                                            ->label('Skill')
+                                            ->badge()
+                                            ->separator(','),
+                                    ])->columns(3),
+                                Fieldset::make('Detail pekerjaan yang dilamar dan lain-lain')
+                                    ->schema([
+                                        TextEntry::make('jobapplications.title')
+                                            ->label('Lowongan Kerja'),
+                                        TextEntry::make('salary')
+                                            ->money('IDR')
+                                            ->label('Ekspektasi Gaji'),
+                                        TextEntry::make('created_at')
+                                            ->label('Tanggal Melamar')
+                                            ->badge()
+                                            ->dateTime(),
+                                        IconEntry::make('cv')
+                                            ->icon('heroicon-m-archive-box-arrow-down')
+                                            ->color('primary')
+                                            ->label('CV')
+                                            ->url(fn($record) => $record->cv ? asset('storage/' . $record->cv) : null),
+                                        TextEntry::make('status')
+                                            ->badge()
+                                            ->columnSpan(2)
+                                            ->color(fn(string $state): string => match ($state) {
+                                                'Baru' => 'primary',
+                                                'Interview' => 'warning',
+                                                'Diterima' => 'success',
+                                                'Tidak Diterima' => 'danger',
+                                            }),
+                                    ])->columns(3),
+                                Fieldset::make('Notes')
+                                    ->schema([
+                                        TextEntry::make('note')
+                                            ->hiddenLabel()
+                                            ->markdown()
+                                            ->columnSpan(2),
+                                    ])->columns(3),
+                            ]),
+                        ])->from('md'),
+                    ]),
+
+            ]);
+    }
 
     public static function getRelations(): array
     {
@@ -374,6 +484,7 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
             'index' => Pages\ListJobapplicants::route('/'),
             'create' => Pages\CreateJobapplicant::route('/create'),
             'edit' => Pages\EditJobapplicant::route('/{record}/edit'),
+            'view' => Pages\ViewJobapplicant::route('/{record}'),
         ];
     }
 }
