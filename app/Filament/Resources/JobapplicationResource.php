@@ -225,13 +225,14 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
                         ->icon('heroicon-o-check-circle'),
                     Action::make('draft')
                         ->label('Draft')
+                        ->visible(fn($record) => $record->status !== 'Draft') // Tampilkan jika status bukan 'Aktif'
                         ->color('warning')
                         ->action(fn($record) => $record->update(['status' => 'Draft']))
                         ->requiresConfirmation()
                         ->icon('heroicon-o-archive-box'),
                     Action::make('deactivate')
                         ->label('Nonaktifkan')
-                        ->visible(fn($record) => $record->status === 'Aktif') // Tampilkan jika status adalah 'Aktif'
+                        ->visible(fn($record) => $record->status !== 'Tidak Aktif') // Tampilkan jika status adalah 'Aktif'
                         ->color('danger')
                         ->action(fn($record) => $record->update(['status' => 'Tidak Aktif']))
                         ->requiresConfirmation()
