@@ -157,6 +157,7 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
                             ->searchable()
                             ->preload(),
                         Forms\Components\FileUpload::make('image')
+                            ->required()
                             ->label('Logo')
                             ->maxSize(1024)
                             ->openable()

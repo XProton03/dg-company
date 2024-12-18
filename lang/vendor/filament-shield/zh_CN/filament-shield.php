@@ -7,12 +7,11 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'column.name' => 'Name',
-    'column.guard_name' => 'Guard Name',
-    'column.team' => 'Team',
-    'column.roles' => 'Roles',
-    'column.permissions' => 'Permissions',
-    'column.updated_at' => 'Updated At',
+    'column.name' => '角色名',
+    'column.guard_name' => '守卫',
+    'column.roles' => '角色',
+    'column.permissions' => '权限',
+    'column.updated_at' => '更新时间',
 
     /*
     |--------------------------------------------------------------------------
@@ -20,13 +19,11 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'field.name' => 'Name',
-    'field.guard_name' => 'Guard Name',
-    'field.permissions' => 'Permissions',
-    'field.team' => 'Team',
-    'field.team.placeholder' => 'Select a team ...',
-    'field.select_all.name' => 'Select All',
-    'field.select_all.message' => 'Enables/Disables all Permissions for this role',
+    'field.name' => '角色名',
+    'field.guard_name' => '守卫',
+    'field.permissions' => '权限',
+    'field.select_all.name' => '全选',
+    'field.select_all.message' => '启用当前为该角色 <span class="text-primary font-medium">启用的</span> 所有权限',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,11 +31,11 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'nav.group' => 'User management',
-    'nav.role.label' => 'Roles',
+    'nav.group' => 'Filament Shield',
+    'nav.role.label' => '角色',
     'nav.role.icon' => 'heroicon-o-shield-check',
-    'resource.label.role' => 'Role',
-    'resource.label.roles' => 'Roles',
+    'resource.label.role' => '角色',
+    'resource.label.roles' => '角色',
 
     /*
     |--------------------------------------------------------------------------
@@ -46,11 +43,11 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'section' => 'Entities',
-    'resources' => 'Resources',
-    'widgets' => 'Widgets',
-    'pages' => 'Pages',
-    'custom' => 'Custom Permissions',
+    'section' => '实体',
+    'resources' => '资源',
+    'widgets' => '小组件',
+    'pages' => '页面',
+    'custom' => '自定义',
 
     /*
     |--------------------------------------------------------------------------
@@ -58,7 +55,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'forbidden' => 'You do not have permission to access',
+    'forbidden' => '无权访问',
 
     /*
     |--------------------------------------------------------------------------
@@ -67,17 +64,17 @@ return [
     */
 
     'resource_permission_prefixes_labels' => [
-        'view' => 'View',
-        'view_any' => 'View Any',
-        'create' => 'Create',
-        'update' => 'Update',
-        'delete' => 'Delete',
-        'delete_any' => 'Delete Any',
-        'force_delete' => 'Force Delete',
-        'force_delete_any' => 'Force Delete Any',
-        'restore' => 'Restore',
-        'reorder' => 'Reorder',
-        'restore_any' => 'Restore Any',
-        'replicate' => 'Replicate',
+        'view' => '详情',
+        'view_any' => '列表',
+        'create' => '创建',
+        'update' => '编辑',
+        'delete' => '删除',
+        'delete_any' => '批量删除',
+        'force_delete' => '永久删除',
+        'force_delete_any' => '批量永久删除',
+        'restore' => '恢复',
+        'reorder' => '重新排序',
+        'restore_any' => '批量恢复',
+        'replicate' => '复制',
     ],
 ];
