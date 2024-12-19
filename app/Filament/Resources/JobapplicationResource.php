@@ -214,7 +214,8 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
             ])
             ->actions([
                 ActionGroup::make([
-                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\ViewAction::make()
+                        ->icon('heroicon-o-eye'),
                     Tables\Actions\EditAction::make(),
                     Action::make('activate')
                         ->label('Aktifkan')
@@ -245,6 +246,11 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
                         // Hapus data dari database
                         $record->delete();
                     }),
+                    Action::make('activities')
+                        ->url(fn($record) => JobapplicationResource::getUrl('activities', ['record' => $record]))
+                        ->icon('heroicon-o-clock')
+                        ->color('secondary')
+                        ->label('Logs'),
                 ]),
             ])
             ->bulkActions([
@@ -363,6 +369,7 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
             'create' => Pages\CreateJobapplication::route('/create'),
             'edit' => Pages\EditJobapplication::route('/{record}/edit'),
             'view' => Pages\ViewJobapplication::route('/{record}'),
+            'activities' => Pages\ListJobapplicationActivities::route('/{record}/activities'),
         ];
     }
 }

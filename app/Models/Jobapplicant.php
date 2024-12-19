@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Jobapplication;
+use Spatie\Activitylog\LogOptions;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Jobapplicant extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
     protected $table = 'jobapplicants';
     protected $fillable = [
         'jobs_id',
@@ -39,6 +41,13 @@ class Jobapplicant extends Model
     public function jobapplications(): BelongsTo
     {
         return $this->belongsTo(JobApplication::class, 'jobs_id');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable()
+            ->logOnlyDirty();
     }
 
     // public function setSkillsAttribute($value)

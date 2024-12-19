@@ -10,6 +10,7 @@ use App\Models\Jobapplicant;
 use Illuminate\Support\Carbon;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Actions\BulkAction;
 use Illuminate\Support\Facades\Storage;
@@ -66,7 +67,6 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                             ->disabled()
                             ->maxLength(3),
                         Forms\Components\TextInput::make('gender')
-                            ->unique(ignoreRecord: true)
                             ->required()
                             ->disabled()
                             ->maxLength(255),
@@ -300,7 +300,8 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                         ->openUrlInNewTab()
                         ->icon('heroicon-o-document')
                         ->color('primary'),
-                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\ViewAction::make()
+                        ->icon('heroicon-o-eye'),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make()->action(function ($record) {
                         // Hapus file dengan disk storage
@@ -315,6 +316,11 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                         // Hapus data dari database
                         $record->delete();
                     }),
+                    Action::make('activities')
+                        ->url(fn($record) => JobapplicantResource::getUrl('activities', ['record' => $record]))
+                        ->icon('heroicon-o-clock')
+                        ->color('secondary')
+                        ->label('Logs'),
                 ]),
             ])
             ->bulkActions([
@@ -485,6 +491,7 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
             'create' => Pages\CreateJobapplicant::route('/create'),
             'edit' => Pages\EditJobapplicant::route('/{record}/edit'),
             'view' => Pages\ViewJobapplicant::route('/{record}'),
+            'activities' => Pages\ListJobapplicantActivities::route('/{record}/activities'),
         ];
     }
 }

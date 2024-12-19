@@ -89,10 +89,15 @@ class UserResource extends Resource implements HasShieldPermissions
             ])
             ->actions([
                 ActionGroup::make([
-                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\ViewAction::make()
+                        ->icon('heroicon-o-eye'),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
-                    Action::make('activities')->url(fn($record) => UserResource::getUrl('activities', ['record' => $record])),
+                    Action::make('activities')
+                        ->url(fn($record) => UserResource::getUrl('activities', ['record' => $record]))
+                        ->icon('heroicon-o-clock')
+                        ->color('secondary')
+                        ->label('Logs'),
                 ]),
             ])
             ->bulkActions([
