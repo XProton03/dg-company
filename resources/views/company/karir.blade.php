@@ -96,13 +96,14 @@
                                             <div
                                                 class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
                                                 <div class="d-flex mb-3">
-                                                    <button class="btn btn-secondary me-2" data-bs-toggle="collapse"
+                                                    <button class="btn academy-btn btn-sm me-3" data-bs-toggle="collapse"
                                                         data-bs-target="#description-{{ $jobapplication->id }}"
                                                         aria-expanded="false"
                                                         aria-controls="description-{{ $jobapplication->id }}">
                                                         Detail
                                                     </button>
-                                                    <button class="btn btn-primary" href="#" data-bs-toggle="modal"
+                                                    <button class="btn academy-btn btn-sm" href="#"
+                                                        data-bs-toggle="modal"
                                                         data-bs-target="#applyModal-{{ $jobapplication->id }}">
                                                         Apply Now
                                                     </button>
@@ -378,9 +379,9 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
+                                                <button type="button" class="btn academy-btn btn-sm"
                                                     data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Submit
+                                                <button type="submit" class="btn academy-btn btn-sm">Submit
                                                     Application</button>
                                             </div>
                                         </div>
