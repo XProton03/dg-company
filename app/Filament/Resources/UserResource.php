@@ -11,7 +11,9 @@ use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
 use Illuminate\Support\Facades\Hash;
+use Filament\Infolists\Components\Grid;
 use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Infolists\Components\Section;
@@ -21,7 +23,6 @@ use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
-use Filament\Infolists\Components\Grid;
 
 class UserResource extends Resource implements HasShieldPermissions
 {
@@ -91,6 +92,7 @@ class UserResource extends Resource implements HasShieldPermissions
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
+                    Action::make('activities')->url(fn($record) => UserResource::getUrl('activities', ['record' => $record])),
                 ]),
             ])
             ->bulkActions([
@@ -130,6 +132,7 @@ class UserResource extends Resource implements HasShieldPermissions
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
             'view' => Pages\ViewUser::route('/{record}'),
+            'activities' => Pages\ListUserActivities::route('/{record}/activities'),
         ];
     }
 }
