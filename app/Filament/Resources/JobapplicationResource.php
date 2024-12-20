@@ -24,6 +24,8 @@ use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
+use Filament\Tables\Actions\ExportBulkAction;
+use App\Filament\Exports\JobapplicationExporter;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\JobapplicationResource\Pages;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
@@ -279,6 +281,8 @@ class JobapplicationResource extends Resource implements HasShieldPermissions
                         ->requiresConfirmation()
                         ->action(fn($records) => $records->each(fn($record) => $record->update(['status' => 'Tidak Aktif'])))
                         ->deselectRecordsAfterCompletion(),
+                    ExportBulkAction::make()
+                        ->exporter(JobapplicationExporter::class),
                 ]),
             ]);
     }

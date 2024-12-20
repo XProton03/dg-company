@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use Filament\Infolists\Components\Split;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Infolists\Components\Section;
@@ -24,6 +25,8 @@ use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
+use Filament\Tables\Actions\ExportBulkAction;
+use App\Filament\Exports\JobapplicantExporter;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\JobapplicantResource\Pages;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
@@ -48,6 +51,7 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
             'delete_any'
         ];
     }
+
 
     public static function form(Form $form): Form
     {
@@ -370,7 +374,9 @@ class JobapplicantResource extends Resource implements HasShieldPermissions
                                 ]);
                             });
                         })
-                        ->deselectRecordsAfterCompletion()
+                        ->deselectRecordsAfterCompletion(),
+                    ExportBulkAction::make()
+                        ->exporter(JobapplicantExporter::class),
                 ]),
             ]);
     }
